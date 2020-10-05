@@ -1,0 +1,50 @@
+replicaCount: 2
+
+image:
+  repository: deitch/aws-asg-roller
+  pullPolicy: IfNotPresent
+  tag: 6d574cd7d46b726b7a60edae2914ee577d4c947b
+
+config:
+  # awsRegion:
+  rollerAsgs: []
+  # ignoreDaemonSets: true
+  deleteLocalData: false
+  # monitoringInterval: 30
+  # allowToIncreaseMax: true
+  storeOriginalValueAsTag: true
+  verbose: true
+
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+rbacAnnotations: {}
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+# Use this toleration to schedule Roller onto masters.
+#
+# - effect: NoSchedule
+#  operator: Exists
+
+affinity:
+# Use the following NodeAffinity to run on masters
+#
+#  nodeAffinity:
+#    requiredDuringSchedulingIgnoredDuringExecution:
+#      nodeSelectorTerms:
+#      - matchExpressions:
+#        - key: kubernetes.io/role
+#          operator: In
+#          values: ["master"]

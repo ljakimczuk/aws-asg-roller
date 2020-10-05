@@ -1,0 +1,44 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "aws-asg-roller.fullname" . }}
+  labels:
+    {{- include "aws-asg-roller.labels" . | nindent 4 }}
+  {{- with .Values.rbacAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
+rules:
+  - apiGroups:
+      - "*"
+    resources:
+      - "*"
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "*"
+    resources:
+      - nodes
+    verbs:
+      - get
+      - list
+      - watch
+      - update
+      - patch
+  - apiGroups:
+      - "*"
+    resources:
+      - pods/eviction
+    verbs:
+      - get
+      - list
+      - create
+  - apiGroups:
+      - "*"
+    resources:
+      - pods
+    verbs:
+      - get
+      - list

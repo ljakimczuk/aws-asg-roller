@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "aws-asg-roller.fullname" . }}-env
+  labels:
+    {{- include "aws-asg-roller.labels" . | nindent 4 }}
+data:
+  AWS_REGION: "{{ .Values.config.awsRegion }}"
+  ROLLER_ASG: "{{ include "aws-asg-roller.asgs" . }}"
+  ROLLER_KUBERNETES: "true"
+  ROLLER_IGNORE_DAEMONSETS: "{{ .Values.config.ignoreDaemonSets }}"
+  ROLLER_DELETE_LOCAL_DATA: "{{ .Values.config.deleteLocalData }}"
+  ROLLER_CHECK_DELAY: "{{ .Values.config.monitoringInterval }}"
+  ROLLER_CAN_INCREASE_MAX: "{{ .Values.config.allowToIncreaseMax }}"
+  ROLLER_ORIGINAL_DESIRED_ON_TAG: "{{ .Values.config.storeOriginalValueAsTag }}"
+  ROLLER_VERBOSE: "{{ .Values.config.verbose }}"
