@@ -141,7 +141,7 @@ func calculateAdjustment(asg *autoscaling.Group, ec2Svc ec2iface.EC2API, hostnam
 		}
 		return originalDesired, "", nil
 	}
-	if originalDesired == desired {
+	if newInstances == 0 {
 		// we have not started updates; raise the desired count
 		return originalDesired + 1, "", nil
 	}

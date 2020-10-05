@@ -5,12 +5,13 @@ metadata:
   labels:
     {{- include "aws-asg-roller.labels" . | nindent 4 }}
 data:
+  TEST: "true"
   AWS_REGION: "{{ .Values.config.awsRegion }}"
   ROLLER_ASG: "{{ include "aws-asg-roller.asgs" . }}"
   ROLLER_KUBERNETES: "true"
-  ROLLER_IGNORE_DAEMONSETS: "{{ .Values.config.ignoreDaemonSets }}"
-  ROLLER_DELETE_LOCAL_DATA: "{{ .Values.config.deleteLocalData }}"
-  ROLLER_CHECK_DELAY: "{{ .Values.config.monitoringInterval }}"
-  ROLLER_CAN_INCREASE_MAX: "{{ .Values.config.allowToIncreaseMax }}"
-  ROLLER_ORIGINAL_DESIRED_ON_TAG: "{{ .Values.config.storeOriginalValueAsTag }}"
-  ROLLER_VERBOSE: "{{ .Values.config.verbose }}"
+  ROLLER_IGNORE_DAEMONSETS: "{{ hasKey .Values.config "ignoreDaemonSets" | ternary .Values.config.ignoreDaemonSets true }}"
+  ROLLER_DELETE_LOCAL_DATA: "{{ hasKey .Values.config "deleteLocalData" | ternary .Values.config.deleteLocalData false }}"
+  ROLLER_CHECK_DELAY: "{{ hasKey .Values.config "monitoringInterval" | ternary .Values.config.monitoringInterval 30 }}"
+  ROLLER_CAN_INCREASE_MAX: "{{ hasKey .Values.config "allowToIncreaseMax" | ternary .Values.config.allowToIncreaseMax false }}"
+  ROLLER_ORIGINAL_DESIRED_ON_TAG: "{{ hasKey .Values.config "storeOriginalValueAsTag" | ternary .Values.config.storeOriginalValueAsTag false }}"
+  ROLLER_VERBOSE: "{{ hasKey .Values.config "verbose" | ternary .Values.config.verbose false }}"
